@@ -14,19 +14,23 @@ var (
 )
 
 func takeProduct() {
-	for i := 0; i <= 100000; i++ {
-		lock.Lock() // lock, then the other thread can't touch to the `stocks` variable
+	for i := 0; i <= 10000; i++ {
+		// lock.Lock() // lock, then the other thread can't touch to the `stocks` variable
 		stocks += 1
-		lock.Unlock() // Now we unlock it so the other can't worl with `stocks`
+		time.Sleep(1 * time.Millisecond)
+
+		// lock.Unlock() // Now we unlock it so the other can't worl with `stocks`
 	}
 	println("Sell 1")
 }
 
 func addProduct() {
-	for i := 0; i <= 100000; i++ {
-		lock.Lock()
+	for i := 0; i <= 10000; i++ {
+		// lock.Lock()
 		stocks -= 1
-		lock.Unlock()
+		time.Sleep(1 * time.Millisecond)
+
+		// lock.Unlock()
 	}
 	println("Adding 1")
 }
@@ -34,6 +38,6 @@ func addProduct() {
 func main() {
 	go takeProduct()
 	go addProduct()
-	time.Sleep(10000 * time.Millisecond)
+	time.Sleep(20000 * time.Millisecond)
 	println(stocks)
 }
